@@ -42,7 +42,7 @@ python manage.py runserver
 ## 📸 Screenshots
 
 ### 🏠 Home Page
-![Home](job_portel\screenshots/home.png)
+![Home](https://raw.githubusercontent.com/Himanshigupta1624/job-portel/refs/heads/main/job_portel/screenshots/home.png)
 
 ### 📋 Job Listings
 ![Job Listings](job_portel\screenshots/job-lists.png)

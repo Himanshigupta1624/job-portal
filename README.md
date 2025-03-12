@@ -42,31 +42,31 @@ python manage.py runserver
 ## 📸 Screenshots
 
 ### 🏠 Home Page
-![Home](https://raw.githubusercontent.com/Himanshigupta1624/job-portel/refs/heads/main/job_portel/screenshots/home.png)
+![Home](job_portel/screenshots/home.png)
 
 ### 📋 Job Listings
-![Job Listings](job_portel\screenshots/job-lists.png)
+![Job Listings](job_portel/screenshots/job-lists.png)
 
 ### 📄 Job Detail Page
-![Job Detail](job_portel\screenshots/job-detail.png)
+![Job Detail](job_portel/screenshots/job-detail.png)
 
 ### 📊 Applicants Dashboard
-![Applicants Dashboard](job_portel\screenshots/applicants-dashboard.png)
+![Applicants Dashboard](job_portel/screenshots/applicants-dashboard.png)
 
 ### 📝 Create Resume
-![Create Resume](job_portel\screenshots/create-resume.png)
+![Create Resume](job_portel/screenshots/create-resume.png)
 
 ### 👩‍💼 Applied Jobs
-![Applied Jobs](job_portel\screenshots/applied-jobs.png)
+![Applied Jobs](job_portel/screenshots/applied-jobs.png)
 
 ### 📊 Recruiter Dashboard
-![Recruiter Dashboard](job_portel\screenshots/recruiter-dashboard.png)
+![Recruiter Dashboard](job_portel/screenshots/recruiter-dashboard.png)
 
 ### 🏢 Create Company
-![Create Company](job_portel\screenshots/create-company.png)
+![Create Company](job_portel/screenshots/create-company.png)
 
 ### 📋 Applicants List
-![Applicants List](job_portel\screenshots/applicants.png)
+![Applicants List](job_portel/screenshots/applicants.png)
 
 
 

@@ -1,0 +1,255 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+{% load widget_tweaks %}
+{% block content %}
+
+<!-- This content will only show if the hero section in base.html doesn't show -->
+{% if request.resolver_match.url_name != 'home' %}
+<header class="bg-light py-5">
+  <div class="container text-center">
+    <h1 class="display-4 fw-bold">Django Jobs. Get Hired Quickly!</h1>
+    <p class="lead">Welcome to Django Job Portal! Search and get your dream job. We have thousands of job offerings for you. Good luck with your job hunt!</p>
+  </div>
+</header>
+{% endif %}
+
+<!-- We'll replace the search form in the base template with this one -->
+<div class="container-fluid bg-primary mb-5 wow fadeIn" data-wow-delay="0.1s" style="padding: 35px;">
+  <div class="container">
+    <form class="row g-2" method="get">
+      <div class="col-md-10">
+        <div class="row g-2">
+          <div class="col-md-3">
+            {% render_field filter.form.title class="form-control border-0" placeholder="Job Keyword" %}
+          </div>
+          <div class="col-md-3">
+            <select class="form-select border-0" name="state">
+              <option value="" selected disabled>Choose Location</option>
+              {% for choice in filter.form.state.field.choices %}
+                <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="col-md-3">
+            <select class="form-select border-0" name="job_type">
+              <option value="" selected disabled>Choose Job Type</option>
+              {% for choice in filter.form.job_type.field.choices %}
+                <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="col-md-3">
+            <select class="form-select border-0" name="industry">
+              <option value="" selected disabled>Select Industry</option>
+              {% for choice in filter.form.industry.field.choices %}
+                <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <button type="submit" class="btn btn-dark border-0 w-100">Search</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Featured Jobs Section - Enhanced Style -->
+<div class="container-xxl py-5">
+  <div class="container">
+    <h1 class="text-center mb-5 wow fadeInUp" data-wow-delay="0.1s">Available Jobs</h1>
+    <div class="tab-class text-center wow fadeInUp" data-wow-delay="0.3s"></div>
+    <div class="row g-4">
+      {% for job in filter.qs %}
+      <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+        <div class="job-item p-4 mb-4">
+          <div class="row g-4">
+            <div class="col-sm-12 d-flex align-items-center">
+              {% if job.company.logo %}
+              <img class="flex-shrink-0 img-fluid border rounded me-3" src="{{ job.company.logo.url }}" alt="{{ job.company.name }}" style="width: 50px; height: 50px;">
+              {% else %}
+              <div class="flex-shrink-0 border rounded me-3 d-flex align-items-center justify-content-center bg-light" style="width: 50px; height: 50px;">
+                <i class="fa fa-building text-primary"></i>
+              </div>
+              {% endif %}
+              <div>
+                <h5 class="mb-2">{{ job.title }}</h5>
+                <span class="text-truncate me-3"><i class="fas fa-map-marker-alt text-primary me-2"></i>{{ job.City }}</span>
+                <span class="text-truncate me-3"><i class="far fa-clock text-primary me-2"></i>{{ job.job_type }}</span>
+                <span class="text-truncate me-3"><i class="far fa-money-bill-alt text-primary me-2"></i>{{ job.salary }}</span>
+                <p class="text-muted mb-0 mt-2 small">Industry: {{ job.industry }}</p>
+                <p class="text-muted mb-0 small">Posted: {{ job.timestamp|naturaltime }}</p>
+              </div>
+            </div>
+            <div class="col-sm-12 d-flex justify-content-end">
+              <a class="btn btn-sm btn-primary" href="{% url 'job-details' job.id %}">Apply Now</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% empty %}
+      <div class="col-12 text-center">
+        <div class="p-5 bg-light rounded">
+          <i class="fas fa-search fa-3x text-primary mb-3"></i>
+          <h4>No jobs found matching your criteria</h4>
+          <p>Try adjusting your search filters or check back later for new opportunities.</p>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    </div>
+    
+    {% if filter.qs %}
+    <div class="text-center mt-4">
+      <a class="btn btn-primary py-3 px-5" href="{% url 'job-listing' %}">Browse More Jobs</a>
+    </div>
+    {% endif %}
+  </div>
+</div>
+
+<div class="container-fluid bg-primary py-5 wow fadeIn" data-wow-delay="0.1s">
+  <div class="container">
+      <div class="row g-4 align-items-center">
+          <div class="col-lg-8">
+              <h1 class="text-white mb-3">Are You an Employer?</h1>
+              <p class="text-white mb-0">Post your job listings and connect with qualified candidates today. Our platform helps you find the perfect match for your company.</p>
+          </div>
+          <div class="col-lg-4 text-lg-end">
+              {% if request.user.is_authenticated %}
+                  {% if request.user.is_recruiter %}
+                      {% if request.user.has_company %}
+                      <a href="{% url 'create-job' %}" class="btn btn-light py-3 px-5 me-3">Post a Job</a>
+                      <a href="{% url 'manage-jobs' %}" class="btn btn-outline-light py-3 px-5">Manage Jobs</a>
+                      {% else %}
+                      <a href="{% url 'update-company' %}" class="btn btn-light py-3 px-5">Create Company Profile</a>
+                      {% endif %}
+                  {% else %}
+                  <a href="{% url 'become-recruiter' %}" class="btn btn-light py-3 px-5">Become a Recruiter</a>
+                  {% endif %}
+              {% else %}
+              <a href="{% url 'login' %}" class="btn btn-light py-3 px-5 me-3">Login</a>
+              
+              {% endif %}
+          </div>
+      </div>
+  </div>
+</div>
+
+<!-- Why Choose Us -->
+<div class="container-xxl py-5">
+  <div class="container">
+      <div class="row g-5 align-items-center">
+          <div class="col-lg-6 wow fadeIn" data-wow-delay="0.1s">
+              <div class="row g-0 about-bg rounded overflow-hidden">
+                  <div class="col-6 text-start">
+                      <img class="img-fluid w-100" src="{% static 'img/about-1.jpg' %}">
+                  </div>
+                  <div class="col-6 text-start">
+                      <img class="img-fluid" src="{% static 'img/about-2.jpg' %}" style="width: 85%; margin-top: 15%;">
+                  </div>
+                  <div class="col-6 text-end">
+                      <img class="img-fluid" src="{% static 'img/about-3.jpg' %}" style="width: 85%;">
+                  </div>
+                  <div class="col-6 text-end">
+                      <img class="img-fluid w-100" src="{% static 'img/about-4.jpg' %}">
+                  </div>
+              </div>
+          </div>
+          <div class="col-lg-6 wow fadeIn" data-wow-delay="0.5s">
+              <h1 class="mb-4">Why People Choose Our Job Portal</h1>
+              <p class="mb-4">We connect top talent with leading employers, streamlining the job search and hiring process for everyone involved.</p>
+              <div class="row g-3">
+                  <div class="col-sm-6">
+                      <h6 class="mb-3"><i class="fa fa-check text-primary me-2"></i>Verified Employers</h6>
+                      <h6 class="mb-0"><i class="fa fa-check text-primary me-2"></i>Mobile-Friendly Interface</h6>
+                  </div>
+                  <div class="col-sm-6">
+                      <h6 class="mb-3"><i class="fa fa-check text-primary me-2"></i>Smart Job Matching</h6>
+                      <h6 class="mb-0"><i class="fa fa-check text-primary me-2"></i>Free Resume Building</h6>
+                  </div>
+              </div>
+              <div class="d-flex align-items-center mt-4">
+                  <a class="btn btn-primary py-3 px-5 me-5" href="">Read More</a>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+
+<!-- Testimonials -->
+<div class="container-xxl py-5 wow fadeInUp" data-wow-delay="0.1s">
+  <div class="container">
+      <h1 class="text-center mb-5">Success Stories</h1>
+      <div class="owl-carousel testimonial-carousel">
+          <div class="testimonial-item bg-light rounded p-4">
+              <i class="fa fa-quote-left fa-2x text-primary mb-3"></i>
+              <p>Thanks to JobPortel, I found my dream job within just two weeks of signing up. The interface is intuitive and the job matching algorithm is spot on!</p>
+              <div class="d-flex align-items-center">
+                  <img class="img-fluid flex-shrink-0 rounded" src="{% static 'img/testimonial-1.jpg' %}" style="width: 50px; height: 50px;">
+                  <div class="ps-3">
+                      <h5 class="mb-1">Sarah Johnson</h5>
+                      <small>Software Developer</small>
+                  </div>
+              </div>
+          </div>
+          <div class="testimonial-item bg-light rounded p-4">
+              <i class="fa fa-quote-left fa-2x text-primary mb-3"></i>
+              <p>As a hiring manager, this platform has simplified our recruitment process. We're able to find quality candidates quickly and efficiently.</p>
+              <div class="d-flex align-items-center">
+                  <img class="img-fluid flex-shrink-0 rounded" src="{% static 'img/testimonial-2.jpg' %}" style="width: 50px; height: 50px;">
+                  <div class="ps-3">
+                      <h5 class="mb-1">Michael Rodriguez</h5>
+                      <small>HR Director</small>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+
+<!-- Optional Pagination if needed -->
+{% if filter.qs.has_other_pages %}
+<div class="container">
+  <div class="d-flex justify-content-center py-3">
+    <nav>
+      <ul class="pagination">
+        {% if filter.qs.has_previous %}
+        <li class="page-item">
+          <a class="page-link" href="?page={{ filter.qs.previous_page_number }}">Previous</a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+          <a class="page-link" href="#">Previous</a>
+        </li>
+        {% endif %}
+        
+        {% for i in filter.qs.paginator.page_range %}
+          {% if filter.qs.number == i %}
+          <li class="page-item active">
+            <a class="page-link" href="#">{{ i }}</a>
+          </li>
+          {% else %}
+          <li class="page-item">
+            <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+          </li>
+          {% endif %}
+        {% endfor %}
+        
+        {% if filter.qs.has_next %}
+        <li class="page-item">
+          <a class="page-link" href="?page={{ filter.qs.next_page_number }}">Next</a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+          <a class="page-link" href="#">Next</a>
+        </li>
+        {% endif %}
+      </ul>
+    </nav>
+  </div>
+</div>
+{% endif %}
+
+{% endblock content %}

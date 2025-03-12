@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+
+<body>
+    <div class="container mt-5">
+        <h2 class="mb-4">Jobs You Have Applied</h2>
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped">
+                <thead class="table-light">
+                    <tr>
+                        <th scope="col">Job Title</th>
+                        <th scope="col">Location</th>
+                        <th scope="col">Salary (Rs)</th>
+                        <th scope="col">Job Type</th>
+                        <th scope="col">Industry</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for job in jobs %}
+                    <tr>
+                        <td>{{job.job.title}}</td>
+                        <td>{{job.job.City}}</td>
+                        <td>{{job.job.salary}}</td>
+                        <td>{{job.job.job_type}}</td>
+                        <td>{{job.job.industry}}</td>
+                        <td><a href="{% url 'job-details' job.job.pk %}"><small>View Job</small></a></td>
+                        
+                    </tr>
+                    {% endfor %}
+                    
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+
+
+{% endblock content %}

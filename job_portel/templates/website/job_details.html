@@ -1,0 +1,103 @@
+{% extends 'base.html'%}
+{% load static %}
+{% load humanize %}
+{% block content %}
+<!-- Header End -->
+<div class="container-xxl py-5 bg-dark page-header mb-5">
+  <div class="container my-5 pt-5 pb-4">
+      <h1 class="display-3 text-white mb-3 animated slideInDown">Job Detail</h1>
+      <nav aria-label="breadcrumb">
+          
+      </nav>
+  </div>
+</div>
+<!-- Header End -->
+<div class="container-xxl py-5 wow fadeInUp" data-wow-delay="0.1s">
+  <div class="container">
+      <div class="row gy-5 gx-4">
+        <div class="col-lg-8">
+          <div class="d-flex align-items-center mb-5">
+             
+              <div class="text-start ps-4">
+                  <h3 class="mb-3">{{ job.title }}</h3>
+                  <span class="text-truncate me-3"><i class="fa fa-map-marker-alt text-primary me-2"></i>{{ job.state}} | Remote</span>
+                  
+                  <span class="text-truncate me-0"><i class="far fa-money-bill-alt text-primary me-2"></i>RS {{ job.salary|intcomma }}</span>
+              </div>
+          </div>
+
+          <div class="mb-5">
+              <h4 class="mb-3">Job Description </h4>
+              <p>{{ job.ideal_candidate }}</p>
+              <h4 class="mb-3">Qualifications</h4>
+              <p>{{ job.requirements }}</p>
+              
+              <h4 class="mb-3">About Company</h4>
+              <ul class="list-unstyled">
+                <li><i class="fa fa-angle-right text-primary me-2"></i>{{job.company.name}}</li>
+                <li><i class="fa fa-angle-right text-primary me-2"></i>{{job.company.city}}, {{job.company.state}}</li>
+                <li><i class="fa fa-angle-right text-primary me-2"></i>{{job.company.est_date}}</li>
+                
+            </ul>
+              
+          </div>
+
+          <div class="">
+              <h4 class="mb-4">Apply For The Job</h4>
+              {% if user.is_authenticated%}
+          {% if has_applied == False %}
+          <a  href="{% url 'apply-to-job' job.pk %}"  class="btn btn-primary btn-sm" >Apply Now </a>
+          {% else %}
+          <p><span class="text-danger"> You have already applied for this job</span></p>
+          {% endif %}
+          
+         {% else %} 
+         <a href="{% url 'login' %}?next={% url 'job-details' job.pk %}" class="btn btn-primary btn-sm">Login to Apply</a>
+         {% endif %}
+              
+          </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="bg-light rounded p-5 mb-4 wow slideInUp" data-wow-delay="0.1s">
+            <h4 class="mb-4">Job Summery</h4>
+            <p><i class="fa fa-angle-right text-primary me-2"></i>Created {{ job.timestamp|naturaltime }}</p>
+            <p><i class="fa fa-angle-right text-primary me-2"></i>Vacancy: 123 Position</p>
+            <p><i class="fa fa-angle-right text-primary me-2"></i>Job Nature: Full Time</p>
+            <p><i class="fa fa-angle-right text-primary me-2"></i>RS {{ job.salary|intcomma }}</p>
+            <p><i class="fa fa-angle-right text-primary me-2"></i>{{ job.state}}</p>
+            <p class="m-0"><i class="fa fa-angle-right text-primary me-2"></i>Date Line: </p>
+        </div>
+        
+    </div>
+    <!-- <div class="p-5 mb-4 bg-light rounded-3">
+        <div class="container-fluid py-5">
+          <h2 class="display-5 fw-bold">{{ job.title }}</h2>
+          <p class="col-md-8 fs-5 mt-3">
+            {{ job.state}} | Remote
+          </p>
+          <p class="col-md-8 fs-5 mt-3">
+            NGN {{ job.salary|intcomma }}
+          </p>
+          {% if user.is_authenticated%}
+          {% if has_applied == False %}
+          <a  href="{% url 'apply-to-job' job.pk %}"  class="btn btn-primary btn-sm" >Apply Now </a>
+          {% else %}
+          <p><span class="text-danger"> You have already applied for this job</span></p>
+          {% endif %}
+          
+         {% else %} 
+         <a href="{% url 'login' %}?next={% url 'job-details' job.pk %}" class="btn btn-primary btn-sm">Login to Apply</a>
+         {% endif %}
+
+        </div>
+      </div> -->
+</div>      
+</div>      
+</div>      
+
+
+
+
+
+
+{% endblock content %}

@@ -1,0 +1,35 @@
+# Ignore the media folder (user-uploaded resumes and files)
+media/
+
+# Ignore environment files and virtual environments
+.env
+venv/
+env/
+*.env
+
+# Ignore compiled Python files
+*.pyc
+*.pyo
+__pycache__/
+
+# Ignore database files (if using SQLite)
+db.sqlite3
+*.sqlite3
+
+# Ignore Django migration cache files
+*.log
+*.pot
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+migrations/__pycache__/
+
+# Ignore static files that are auto-generated
+staticfiles/
+*.sass-cache/
+npm-debug.log
+yarn-error.log
+
+# Ignore VS Code settings
+.vscode/

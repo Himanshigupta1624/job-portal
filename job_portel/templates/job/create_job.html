@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+{% load static %}
+{% block content %}
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <div class="card shadow-lg border-0 rounded-lg">
+        <div class="card-header bg-primary text-white">
+          <h4 class="card-title mb-0 text-center py-3"><i class="fas fa-briefcase me-2"></i>Create A Job Posting</h4>
+        </div>
+        <div class="card-body p-4">
+          <form method="POST" class="needs-validation" novalidate>
+            {% csrf_token %}
+            
+            <div class="row">
+              <div class="col-md-12 mb-4">
+                <label for="exampleInputEmail1" class="form-label fw-bold">Job Title</label>
+                {{ form.title|add_class:"form-control form-control-lg"|attr:"placeholder:Enter job title" }}
+              </div>
+            </div>
+            
+            <div class="row mb-4">
+              <div class="col-md-12">
+                <label for="exampleInputEmail1" class="form-label fw-bold">Job Description</label>
+                {{ form.requirements|add_class:"form-control"|attr:"rows:4"|attr:"placeholder:Describe the job responsibilities and requirements" }}
+                <div class="form-text">Provide a detailed description to attract qualified candidates</div>
+              </div>
+            </div>
+            
+            <div class="row mb-4">
+              <div class="col-md-6 mb-3 mb-md-0">
+                <label for="exampleInputEmail1" class="form-label fw-bold">City</label>
+                {{ form.City|add_class:"form-control"|attr:"placeholder:City" }}
+              </div>
+              <div class="col-md-6">
+                <label for="exampleInputEmail1" class="form-label fw-bold">State</label>
+                {{ form.state|add_class:"form-control"|attr:"placeholder:State" }}
+              </div>
+            </div>
+            
+            <div class="row mb-4">
+              <div class="col-md-6 mb-3 mb-md-0">
+                <label for="exampleInputEmail1" class="form-label fw-bold">Industry</label>
+                {{ form.industry|add_class:"form-control"|attr:"placeholder:Select industry" }}
+              </div>
+              <div class="col-md-6">
+                <label for="exampleInputEmail1" class="form-label fw-bold">Job Type</label>
+                {{ form.job_type|add_class:"form-control"|attr:"placeholder:Select job type" }}
+              </div>
+            </div>
+            
+            <div class="row mb-4">
+              <div class="col-md-12">
+                <label for="exampleInputEmail1" class="form-label fw-bold">Salary Range</label>
+                {{ form.salary|add_class:"form-control"|attr:"placeholder:e.g. Rs 5,00,000 - Rs7,00,000 per year" }}
+              </div>
+            </div>
+            
+            <div class="row mb-4">
+              <div class="col-md-12">
+                <label for="exampleInputEmail1" class="form-label fw-bold">Ideal Candidate</label>
+                {{ form.ideal_candidate|add_class:"form-control"|attr:"rows:4"|attr:"placeholder:Describe your ideal candidate's qualifications and experience" }}
+              </div>
+            </div>
+            
+            <div class="row mb-4">
+              <div class="col-md-12">
+                <div class="form-check form-switch">
+                  {{ form.is_available|add_class:"form-check-input" }}
+                  <label class="form-check-label fw-bold" for="is_available">Is this Job Available</label>
+                </div>
+              </div>
+            </div>
+            
+            <div class="d-grid gap-2 mt-4">
+              <button type="submit" class="btn btn-primary btn-lg">Post Job</button>
+            </div>
+          </form>
+        </div>
+        <div class="card-footer text-center py-3">
+          <div class="small">Need help? <a href="#">Contact support</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}

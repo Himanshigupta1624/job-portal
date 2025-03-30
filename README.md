@@ -5,10 +5,10 @@ Django Job Portal.
 
 ```
 open terminal and type
-https://github.com/Himanshigupta1624/job-portel.git
+https://github.com/Himanshigupta1624/job-portal.git
 
 or simply download using the url below
-https://github.com/Himanshigupta1624/job-portel.git
+https://github.com/Himanshigupta1624/job-portal.git
 ```
 ## Create & Activate a Virtual Environment
 ```
